@@ -85,6 +85,49 @@ $(document).ready(function () {
         }
     });
 
+    $("#connectBtn").on("click", function () {
+        const connectionRequest = {
+            DatabaseType: $("#dbType").val(),
+            ServerName: $("#server").val(),
+            DatabaseName: $("#database").val(),
+            Username: $("#userId").val(),
+            Password: $("#password").val()
+        };
+
+        $.ajax({
+            url: `${apiUrl}/api/ConnectionString/SetConnection`,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(connectionRequest),
+            success: function (data) {
+                $("#message").removeClass('text-danger').addClass('text-success').text(data.message);
+                if (data.success) {
+                    fetchTables();
+                }
+            },
+            error: function (error) {
+                $("#message").removeClass('text-success').addClass('text-danger').text(`Bağlantı hatası: ${error.responseJSON.message}`);
+            }
+        });
+    });
+
+    function fetchTables() {
+        $.ajax({
+            url: `${apiUrl}/api/Data/GetTables`,
+            method: 'GET',
+            success: function (tables) {
+                const tableSelect = $("#tableSelect");
+                tableSelect.empty().append('<option value="">Tablo Seçin</option>');
+                tables.forEach(function (table) {
+                    tableSelect.append(`<option value="${table}">${table}</option>`);
+                });
+            },
+            error: function (error) {
+                console.error('Error fetching tables:', error);
+            }
+        });
+    }
+
     function fetchColumnValueCountsWithJoin() {
         const table = $("#tableSelect").val();
         const column = $("#columnSelect").val();
@@ -148,7 +191,7 @@ $(document).ready(function () {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: `Quantity - ${displayColumn}`,
+                    label: `Değer - ${displayColumn}`,
                     data: counts,
                     backgroundColor: chartType === 'radar' ? 'rgba(54, 162, 235, 0.2)' : chartType === 'bar' ? 'rgba(54, 162, 235, 0.2)' : 'rgba(54, 162, 235, 0)',
                     borderColor: 'rgba(54, 162, 235, 1)',

@@ -13,14 +13,10 @@ namespace APISEYHUN.DataServices
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-
-
         public DataService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
-
-
 
         private string GetDatabaseType(string connectionString)
         {
@@ -130,7 +126,6 @@ namespace APISEYHUN.DataServices
                 }
             }
         }
-
         public async Task<IEnumerable<dynamic>> GetColumnValueCountsByTables(string tableName, string columnName)
         {
             var connectionString = _httpContextAccessor.HttpContext.Session.GetString("ConnectionString");
@@ -183,10 +178,8 @@ namespace APISEYHUN.DataServices
         {
             var connectionString = _httpContextAccessor.HttpContext.Session.GetString("ConnectionString");
 
-
             if (connectionString.Contains("Uid"))
             {
-                // SQL sorgusu: İlgili tabloyu ve ilişkili tabloyu birleştirip, belirli bir sütuna göre gruplama yaparak değer sayısını alır.
                 string query = $@"
                 SELECT `{displayColumn}`, COUNT(*) AS Count
                 FROM `{tableName}`
@@ -224,14 +217,12 @@ namespace APISEYHUN.DataServices
                 JOIN ""{joinTable}"" ON ""{tableName}"".""{columnName}"" = ""{joinTable}"".""{joinColumn}""
                 GROUP BY ""{displayColumn}""";
 
-                using (var connection = new NpgsqlConnection(connectionString)) // PostgreSQL için NpgsqlConnection kullanılır
+                using (var connection = new NpgsqlConnection(connectionString)) 
                 {
                     connection.Open();
                     var data = await connection.QueryAsync<dynamic>(query);
                     return data.ToList();
                 }
-
-
             }
         }
     }

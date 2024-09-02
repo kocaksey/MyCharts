@@ -19,7 +19,7 @@ namespace APISEYHUN.Controllers
         {
             _dataService = dataService;
         }
-        //
+        
         [HttpGet("GetTables")]
         public IActionResult GetTables()
         {
@@ -35,13 +35,10 @@ namespace APISEYHUN.Controllers
         }
 
 
-
         [HttpGet("GetColumns")]
         public async Task<IActionResult> GetColumns(string tableName)
         {
             var connectionString = HttpContext.Session.GetString("ConnectionString");
-
-
 
             if (string.IsNullOrEmpty(connectionString))
             {
@@ -51,12 +48,7 @@ namespace APISEYHUN.Controllers
             var result = await _dataService.GetColumnsByDatabase(tableName);
             return Ok(result);
 
-
-
-
-
         }
-
 
         [HttpGet("GetColumnValueCounts")]
         public async Task<IActionResult> GetColumnValueCounts(string tableName, string columnName)
@@ -73,7 +65,6 @@ namespace APISEYHUN.Controllers
 
         }
 
-
         [HttpGet("GetColumnValueCountsWithJoin")]
         public async Task<IActionResult> GetColumnValueCountsWithJoin(string tableName, string columnName, string joinTable, string joinColumn, string displayColumn)
         {
@@ -82,18 +73,8 @@ namespace APISEYHUN.Controllers
             {
                 return BadRequest("Connection string is not set.");
             }
-            var result = await _dataService.GetColumnValueJoinCountsByTables(tableName, columnName, joinTable,  joinColumn,  displayColumn);
+            var result = await _dataService.GetColumnValueJoinCountsByTables(tableName, columnName, joinTable, joinColumn, displayColumn);
             return Ok(result);
-            
-
-
         }
-
-
-
-
-
-
-
     }
 }

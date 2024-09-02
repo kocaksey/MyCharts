@@ -64,12 +64,10 @@ namespace APISEYHUN.Controllers
                 case "sqlserver":
                     if (string.IsNullOrEmpty(request.Username) && string.IsNullOrEmpty(request.Password))
                     {
-                        // Windows Authentication
                         return $"Server={request.ServerName};Initial Catalog={request.DatabaseName};Integrated Security=True;TrustServerCertificate=True;";
                     }
                     else
                     {
-                        // SQL Authentication
                         if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
                         {
                             throw new ArgumentException("SQL Server kimlik doğrulaması için kullanıcı adı ve parola gereklidir.");

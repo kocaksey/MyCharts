@@ -3,36 +3,44 @@
   "WorkspaceRootPath": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\controllers\\datacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\controllers\\datacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\controllers\\connectionstringcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\controllers\\connectionstringcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\connectionstringclass\\connectionrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\connectionstringclass\\connectionrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\wwwroot\\js\\methods.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\wwwroot\\js\\methods.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\connectionstringclass\\connectionrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\connectionstringclass\\connectionrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\controllers\\connectionstringcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\controllers\\connectionstringcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\controllers\\datacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\controllers\\datacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\dataservices\\dataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\dataservices\\dataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\apiseyhun.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\apiseyhun.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|c:\\users\\asus\\source\\repos\\mycharts\\apiseyhun\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3875D9C3-BD77-4089-81E3-EF8C1EC929B8}|APISEYHUN\\APISEYHUN.csproj|solutionrelative:apiseyhun\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,55 +66,85 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
+              "Title": "APISEYHUN.http",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\APISEYHUN.http",
+              "RelativeDocumentMoniker": "APISEYHUN\\APISEYHUN.http",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\APISEYHUN.http",
+              "RelativeToolTip": "APISEYHUN\\APISEYHUN.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2024-09-02T22:05:02.634Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\appsettings.json",
+              "RelativeDocumentMoniker": "APISEYHUN\\appsettings.json",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\appsettings.json",
+              "RelativeToolTip": "APISEYHUN\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-09-02T22:04:59.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "methods.js",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\wwwroot\\js\\methods.js",
               "RelativeDocumentMoniker": "APISEYHUN\\wwwroot\\js\\methods.js",
               "ToolTip": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\wwwroot\\js\\methods.js",
               "RelativeToolTip": "APISEYHUN\\wwwroot\\js\\methods.js",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAYwAMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIAAAAAAAAAAAAAtwLsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-09-02T20:58:44.778Z"
+              "WhenOpened": "2024-09-02T20:58:44.778Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "APISEYHUN\\Properties\\launchSettings.json",
               "ToolTip": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\Properties\\launchSettings.json",
               "RelativeToolTip": "APISEYHUN\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-02T18:47:19.016Z"
+              "WhenOpened": "2024-09-02T18:47:19.016Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\Program.cs",
               "RelativeDocumentMoniker": "APISEYHUN\\Program.cs",
               "ToolTip": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\Program.cs",
               "RelativeToolTip": "APISEYHUN\\Program.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAUwB4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T18:22:34.252Z"
+              "WhenOpened": "2024-09-02T18:22:34.252Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "DataService.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\DataServices\\DataService.cs",
               "RelativeDocumentMoniker": "APISEYHUN\\DataServices\\DataService.cs",
               "ToolTip": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\DataServices\\DataService.cs",
               "RelativeToolTip": "APISEYHUN\\DataServices\\DataService.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAgwIQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAANEAAAAAAAAAAAAUwAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T16:31:30.137Z"
+              "WhenOpened": "2024-09-02T16:31:30.137Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ConnectionRequest.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\ConnectionStringClass\\ConnectionRequest.cs",
               "RelativeDocumentMoniker": "APISEYHUN\\ConnectionStringClass\\ConnectionRequest.cs",
@@ -114,44 +152,47 @@
               "RelativeToolTip": "APISEYHUN\\ConnectionStringClass\\ConnectionRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T16:29:48.568Z"
+              "WhenOpened": "2024-09-02T16:29:48.568Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "index.html",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\wwwroot\\index.html",
               "RelativeDocumentMoniker": "APISEYHUN\\wwwroot\\index.html",
               "ToolTip": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\wwwroot\\index.html",
               "RelativeToolTip": "APISEYHUN\\wwwroot\\index.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADsAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-09-02T13:40:02.486Z"
+              "WhenOpened": "2024-09-02T13:40:02.486Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "DataController.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\Controllers\\DataController.cs",
               "RelativeDocumentMoniker": "APISEYHUN\\Controllers\\DataController.cs",
               "ToolTip": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\Controllers\\DataController.cs",
               "RelativeToolTip": "APISEYHUN\\Controllers\\DataController.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABkAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAEwAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-02T13:10:36.578Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "ConnectionStringController.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\Controllers\\ConnectionStringController.cs",
               "RelativeDocumentMoniker": "APISEYHUN\\Controllers\\ConnectionStringController.cs",
               "ToolTip": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\Controllers\\ConnectionStringController.cs",
               "RelativeToolTip": "APISEYHUN\\Controllers\\ConnectionStringController.cs",
-              "ViewState": "AgIAAGUAAAAAAAAAAAAgwCMAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAgwEYAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T13:08:16.138Z"
+              "WhenOpened": "2024-09-02T13:08:16.138Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -4,91 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dinamik Chart Uygulaması</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/methods.js"></script>
 </head>
 
 <body>
-    <h1>Dinamik Chart Uygulaması</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">MyCharts</h1>
 
-    
-    <div>
-        <label for="dbType">Veritabanı Türü:</label>
-        <select id="dbType">
-            <option value="sqlserver">SqlServer</option>
-            <option value="mysql">MySQL</option>
-            <option value="postgresql">PostgreSQL</option>
-        </select>
-    </div>
-    <div>
-        <label for="server">Sunucu:</label>
-        <input type="text" id="server" placeholder="localhost">
-    </div>
-    <div>
-        <label for="database">Veritabanı Adı:</label>
-        <input type="text" id="database" placeholder="Veritabanı Adı">
-    </div>
-    <div>
-        <label for="userId">Kullanıcı Adı:</label>
-        <input type="text" id="userId" placeholder="Kullanıcı Adı">
-    </div>
-    <div>
-        <label for="password">Şifre:</label>
-        <input type="password" id="password" placeholder="Şifre">
-    </div>
-    <button id="connectBtn">Bağlan ve Tabloları Getir</button>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="dbType">Veritabanı Türü:</label>
+                    <select class="form-control" id="dbType">
+                        <option value="sqlserver">SqlServer</option>
+                        <option value="mysql">MySQL</option>
+                        <option value="postgresql">PostgreSQL</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="server">Sunucu:</label>
+                    <input type="text" class="form-control" id="server" placeholder="localhost">
+                </div>
+                <div class="form-group">
+                    <label for="database">Veritabanı Adı:</label>
+                    <input type="text" class="form-control" id="database" placeholder="Veritabanı Adı">
+                </div>
+                <div class="form-group">
+                    <label for="userId">Kullanıcı Adı:</label>
+                    <input type="text" class="form-control" id="userId" placeholder="Kullanıcı Adı">
+                </div>
+                <div class="form-group">
+                    <label for="password">Şifre:</label>
+                    <input type="password" class="form-control" id="password" placeholder="Şifre">
+                </div>
+                <button id="connectBtn" class="btn btn-primary btn-block">Bağlan ve Tabloları Getir</button>
+                <div id="message" class="mt-3 text-center"></div>
+            </div>
+        </div>
 
-    
-    <div id="message"></div>
+        <h2 class="text-center mb-4">Tablo ve Sütun Seçimi</h2>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="tableSelect">Tablo Seçin:</label>
+                    <select class="form-control" id="tableSelect">
+                        <option value="">Tablo Seçin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="columnSelect">Sütun Seçin:</label>
+                    <select class="form-control" id="columnSelect">
+                        <option value="">Sütun Seçin</option>
+                    </select>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="enableJoin">
+                    <label class="form-check-label" for="enableJoin">Farklı tablo ile ilişkilendireceğim</label>
+                </div>
+                <div class="form-group">
+                    <label for="joinTableSelect">Birleştirilecek Tablo:</label>
+                    <input type="text" class="form-control" id="joinTableSelect" placeholder="Birleştirilecek Tablo" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="joinColumnSelect">Birleştirilecek Sütun:</label>
+                    <input type="text" class="form-control" id="joinColumnSelect" placeholder="Birleştirilecek Sütun" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="displayColumnSelect">Görüntülenecek Sütun:</label>
+                    <input type="text" class="form-control" id="displayColumnSelect" placeholder="Görüntülenecek Sütun" disabled>
+                </div>
+            </div>
+        </div>
 
-    <h2>Tablo ve Sütun Seçimi</h2>
-    <div>
-        <label for="tableSelect">Tablo Seçin:</label>
-        <select id="tableSelect">
-            <option value="">Tablo Seçin</option>
-        </select>
+        <div class="form-group">
+            <label for="chartTypeSelect">Grafik Türü Seçin:</label>
+            <select class="form-control" id="chartTypeSelect">
+                <option value="bar">Bar Chart</option>
+                <option value="line">Line Chart</option>
+                <option value="radar">Radar Chart</option>
+            </select>
+        </div>
+        <button id="getChartBtn" class="btn btn-success btn-block mb-4">Veriyi Getir ve Grafiği Göster</button>
+
+        <canvas id="myChart" width="400" height="200"></canvas>
     </div>
-    <div>
-        <label for="columnSelect">Sütun Seçin:</label>
-        <select id="columnSelect">
-            <option value="">Sütun Seçin</option>
-        </select>
-    </div>
 
-    <div>
-        <input type="checkbox" id="enableJoin">
-        <label for="enableJoin">Farklı tablo ile ilişkilendireceğim</label>
-    </div>
-
-    <div>
-        <label for="joinTableSelect">Birleştirilecek Tablo:</label>
-        <input type="text" id="joinTableSelect" placeholder="Birleştirilecek Tablo" disabled>
-    </div>
-    <div>
-        <label for="joinColumnSelect">Birleştirilecek Sütun:</label>
-        <input type="text" id="joinColumnSelect" placeholder="Birleştirilecek Sütun" disabled>
-    </div>
-    <div>
-        <label for="displayColumnSelect">Görüntülenecek Sütun:</label>
-        <input type="text" id="displayColumnSelect" placeholder="Görüntülenecek Sütun" disabled>
-    </div>
-
-    <div>
-        <label for="chartTypeSelect">Grafik Türü Seçin:</label>
-        <select id="chartTypeSelect">
-            <option value="bar">Bar Chart</option>
-            <option value="line">Line Chart</option>
-            <option value="radar">Radar Chart</option>
-        </select>
-    </div>
-
-    <button id="getChartBtn">Veriyi Getir ve Grafiği Göster</button>
-
-    <canvas id="myChart" width="400" height="200"></canvas>
-
-
-    
 </body>
 </html>
