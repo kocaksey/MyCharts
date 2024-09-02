@@ -3,6 +3,8 @@ using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using Npgsql;
+using System.Text.RegularExpressions;
 
 namespace APISEYHUN.Controllers
 {
@@ -62,17 +64,37 @@ namespace APISEYHUN.Controllers
             }
 
             // MySqlConnectionStringBuilder kullanarak bağlantı dizesinden veritabanı adını alıyoruz
-            var builder = new MySqlConnectionStringBuilder(connectionString);
-            string databaseName = builder.Database;
-
-            string query = $"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{tableName}' AND TABLE_SCHEMA = '{databaseName}'";
-
-            using (var connection = new MySqlConnection(connectionString))
+            if (connectionString.Contains("Uid"))
             {
-                connection.Open();
-                var columns = connection.Query<string>(query).ToList();
-                return Ok(columns);
+                var builder = new MySqlConnectionStringBuilder(connectionString);
+                string databaseName = builder.Database;
+
+                string query = $"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{tableName}' AND TABLE_SCHEMA = '{databaseName}'";
+
+                using (var connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var columns = connection.Query<string>(query).ToList();
+                    return Ok(columns);
+                }
             }
+            else
+            {
+                var builder = new SqlConnectionStringBuilder(connectionString);
+                string databaseName = builder.InitialCatalog;
+
+                string query = $"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{tableName}' AND TABLE_SCHEMA = 'dbo'";
+
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var columns = connection.Query<string>(query).ToList();
+                    return Ok(columns);
+                }
+            }
+
+
+
         }
         [HttpGet("GetColumnData")]
         public IActionResult GetColumnData(string tableName, string columnName)
@@ -132,19 +154,56 @@ namespace APISEYHUN.Controllers
                 return BadRequest("Connection string is not set.");
             }
 
-            // SQL sorgusu: İlgili tabloyu ve ilişkili tabloyu birleştirip, belirli bir sütuna göre gruplama yaparak değer sayısını alır.
-            string query = $@"
+            if (connectionString.Contains("Uid"))
+            {
+                // SQL sorgusu: İlgili tabloyu ve ilişkili tabloyu birleştirip, belirli bir sütuna göre gruplama yaparak değer sayısını alır.
+                string query = $@"
                 SELECT `{displayColumn}`, COUNT(*) AS Count
                 FROM `{tableName}`
                 JOIN `{joinTable}` ON `{tableName}`.`{columnName}` = `{joinTable}`.`{joinColumn}`
                 GROUP BY `{displayColumn}`";
 
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                connection.Open();
-                var data = connection.Query(query).ToList();
-                return Ok(data);
+                using (var connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var data = connection.Query(query).ToList();
+                    return Ok(data);
+                }
             }
+            else if (connectionString.Contains("User Id") || connectionString.Contains("Trust"))
+            {
+                string query = $@"
+                SELECT [{displayColumn}], COUNT(*) AS Count
+                FROM [{tableName}]
+                JOIN [{joinTable}] ON [{tableName}].[{columnName}] = [{joinTable}].[{joinColumn}]
+                GROUP BY [{displayColumn}]";
+
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var data = connection.Query(query).ToList();
+                    return Ok(data);
+                }
+
+            }else
+            {
+                string query = $@"
+                SELECT ""{displayColumn}"", COUNT(*) AS Count
+                FROM ""{tableName}""
+                JOIN ""{joinTable}"" ON ""{tableName}"".""{columnName}"" = ""{joinTable}"".""{joinColumn}""
+                GROUP BY ""{displayColumn}""";
+
+                using (var connection = new NpgsqlConnection(connectionString)) // PostgreSQL için NpgsqlConnection kullanılır
+                {
+                    connection.Open();
+                    var data = connection.Query(query).ToList();
+                    return Ok(data);
+                }
+
+
+            }
+
+
         }
 
 

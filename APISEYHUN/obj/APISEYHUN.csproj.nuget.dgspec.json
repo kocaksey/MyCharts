@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\Desktop\\APICASE\\APISEYHUN\\APISEYHUN.csproj": {}
+    "C:\\Users\\ASUS\\Source\\Repos\\MyCharts\\APISEYHUN\\APISEYHUN.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\Desktop\\APICASE\\APISEYHUN\\APISEYHUN.csproj": {
+    "C:\\Users\\ASUS\\Source\\Repos\\MyCharts\\APISEYHUN\\APISEYHUN.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\APICASE\\APISEYHUN\\APISEYHUN.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\Source\\Repos\\MyCharts\\APISEYHUN\\APISEYHUN.csproj",
         "projectName": "APISEYHUN",
-        "projectPath": "C:\\Users\\ASUS\\Desktop\\APICASE\\APISEYHUN\\APISEYHUN.csproj",
+        "projectPath": "C:\\Users\\ASUS\\Source\\Repos\\MyCharts\\APISEYHUN\\APISEYHUN.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\Desktop\\APICASE\\APISEYHUN\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\Source\\Repos\\MyCharts\\APISEYHUN\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
