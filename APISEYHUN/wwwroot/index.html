@@ -95,6 +95,8 @@
         let myChart = null;
 
         $(document).ready(function () {
+            const apiUrl = window.location.origin;
+
             $("#enableJoin").on("change", function () {
                 const isChecked = $(this).is(":checked");
                 $("#joinTableSelect, #joinColumnSelect, #displayColumnSelect").prop("disabled", !isChecked);
@@ -110,7 +112,7 @@
                 };
 
                 $.ajax({
-                    url: 'https://localhost:7249/api/ConnectionString/SetConnection',
+                    url: `${apiUrl}/api/ConnectionString/SetConnection`,
                     method: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(connectionRequest),
@@ -125,11 +127,10 @@
                     }
                 });
             });
-            //
-        //
+
             function fetchTables() {
                 $.ajax({
-                    url: 'https://localhost:7249/api/Data/GetTables',
+                    url: `${apiUrl}/api/Data/GetTables`,
                     method: 'GET',
                     success: function (tables) {
                         const tableSelect = $("#tableSelect");
@@ -152,7 +153,7 @@
                 }
 
                 $.ajax({
-                    url: `https://localhost:7249/api/Data/GetColumns?tableName=${table}`,
+                    url: `${apiUrl}/api/Data/GetColumns?tableName=${table}`,
                     method: 'GET',
                     success: function (columns) {
                         const columnSelect = $("#columnSelect");
@@ -191,7 +192,7 @@
                 }
 
                 $.ajax({
-                    url: `https://localhost:7249/api/Data/GetColumnValueCountsWithJoin?tableName=${table}&columnName=${column}&joinTable=${joinTable}&joinColumn=${joinColumn}&displayColumn=${displayColumn}`,
+                    url: `${apiUrl}/api/Data/GetColumnValueCountsWithJoin?tableName=${table}&columnName=${column}&joinTable=${joinTable}&joinColumn=${joinColumn}&displayColumn=${displayColumn}`,
                     method: 'GET',
                     success: function (data) {
                         const labels = data.map(item => item[displayColumn]);
@@ -215,7 +216,7 @@
                 }
 
                 $.ajax({
-                    url: `https://localhost:7249/api/Data/GetColumnValueCounts?tableName=${table}&columnName=${column}`,
+                    url: `${apiUrl}/api/Data/GetColumnValueCounts?tableName=${table}&columnName=${column}`,
                     method: 'GET',
                     success: function (data) {
                         const labels = data.map(item => item[column]);

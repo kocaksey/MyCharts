@@ -1,0 +1,39 @@
+{
+  "Version": 1,
+  "Hash": "JCuyPQe1SveBhCIWiwT4si5ctjehesHCZ2ufaShPngo=",
+  "Source": "APISEYHUN",
+  "BasePath": "_content/APISEYHUN",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "APISEYHUN\\wwwroot",
+      "Source": "APISEYHUN",
+      "ContentRoot": "C:\\Users\\ASUS\\Source\\Repos\\MyCharts\\APISEYHUN\\wwwroot\\",
+      "BasePath": "_content/APISEYHUN",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\ASUS\\Source\\Repos\\MyCharts\\APISEYHUN\\wwwroot\\index.html",
+      "SourceId": "APISEYHUN",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\Source\\Repos\\MyCharts\\APISEYHUN\\wwwroot\\",
+      "BasePath": "_content/APISEYHUN",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    }
+  ]
+}
