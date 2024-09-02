@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "i2aQSyDKEHg=",
+  "dgSpecHash": "C1VZKNdOCaQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS\\source\\repos\\MyCharts\\APISEYHUN\\APISEYHUN.csproj",
+  "projectFilePath": "C:\\Users\\ASUS\\Source\\Repos\\MyCharts\\APISEYHUN\\APISEYHUN.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
