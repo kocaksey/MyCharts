@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using MySql.Data.MySqlClient;
 using Npgsql;
+using Org.BouncyCastle.Tls.Crypto;
 using System.Text.RegularExpressions;
 
 namespace APISEYHUN.Controllers
@@ -37,7 +38,8 @@ namespace APISEYHUN.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
+        //sdasasas
+        //as
         [HttpGet("GetTables")]
         public IActionResult GetTables()
         {
@@ -78,7 +80,8 @@ namespace APISEYHUN.Controllers
                     return Ok(columns);
                 }
             }
-            else
+            else if (connectionString.Contains("User Id") || connectionString.Contains("Trust"))
+
             {
                 var builder = new SqlConnectionStringBuilder(connectionString);
                 string databaseName = builder.InitialCatalog;
@@ -92,29 +95,50 @@ namespace APISEYHUN.Controllers
                     return Ok(columns);
                 }
             }
+            else
+            {
+                var builder = new NpgsqlConnectionStringBuilder(connectionString);
+                string databaseName = builder.Database;
+
+                string query = $@"
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name = '{tableName}' AND table_schema = 'public'";
+
+                using (var connection = new NpgsqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var columns = connection.Query<string>(query).ToList();
+                    return Ok(columns);
+                }
+            }
 
 
 
         }
-        [HttpGet("GetColumnData")]
-        public IActionResult GetColumnData(string tableName, string columnName)
-        {
-            var connectionString = HttpContext.Session.GetString("ConnectionString");
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                return BadRequest("Connection string is not set.");
-            }
 
-            // MySQL'de köşeli parantez kullanmak yerine doğrudan sütun ve tablo adlarını kullanabiliriz
-            string query = $"SELECT `{columnName}` FROM `{tableName}`";
+        // buraya bakılacak
 
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                connection.Open();
-                var data = connection.Query(query).ToList();
-                return Ok(data);
-            }
-        }
+
+        //[HttpGet("GetColumnData")]
+        //public IActionResult GetColumnData(string tableName, string columnName)
+        //{
+        //    var connectionString = HttpContext.Session.GetString("ConnectionString");
+        //    if (string.IsNullOrEmpty(connectionString))
+        //    {
+        //        return BadRequest("Connection string is not set.");
+        //    }
+
+        //    // MySQL'de köşeli parantez kullanmak yerine doğrudan sütun ve tablo adlarını kullanabiliriz
+        //    string query = $"SELECT `{columnName}` FROM `{tableName}`";
+
+        //    using (var connection = new MySqlConnection(connectionString))
+        //    {
+        //        connection.Open();
+        //        var data = connection.Query(query).ToList();
+        //        return Ok(data);
+        //    }
+        //}
 
         [HttpGet("GetColumnValueCounts")]
         public IActionResult GetColumnValueCounts(string tableName, string columnName)
@@ -125,23 +149,49 @@ namespace APISEYHUN.Controllers
                 return BadRequest("Connection string is not set.");
             }
 
-            // SQL sorgusu: Her bir farklı sütun değerinin kaç kez tekrarlandığını sayar
-            //    string query = $@"
-            //SELECT `{columnName}`, COUNT(*) AS Count
-            //FROM `{tableName}`
-            //GROUP BY `{columnName}`";
-            string query = $@"
-                SELECT `parentcategories`.`parentcategoryname`, COUNT(*) AS Count
-                FROM `{tableName}`
-                INNER JOIN `parentcategories` ON `{tableName}`.`{columnName}` = `parentcategories`.`id`
-                GROUP BY `parentcategories`.`parentcategoryname`";
-
-            using (var connection = new MySqlConnection(connectionString))
+            if (connectionString.Contains("Uid"))
             {
-                connection.Open();
-                var data = connection.Query(query).ToList();
-                return Ok(data);
+                string query = $@"
+            SELECT `{columnName}`, COUNT(*) AS Count
+            FROM `{tableName}`
+            GROUP BY `{columnName}`";
+
+                using (var connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var data = connection.Query(query).ToList();
+                    return Ok(data);
+                }
             }
+            else if (connectionString.Contains("User Id") || connectionString.Contains("Trust"))
+            {
+                string query = $@"
+                SELECT [{columnName}], COUNT(*) AS Count
+                FROM [{tableName}]
+                GROUP BY [{columnName}]";
+
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var data = connection.Query(query).ToList();
+                    return Ok(data);
+                }
+            } else
+            {
+                string query = $@"
+                SELECT ""{columnName}"", COUNT(*) AS Count
+                FROM ""{tableName}""
+                GROUP BY ""{columnName}""";
+
+                using (var connection = new NpgsqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var data = connection.Query(query).ToList();
+                    return Ok(data);
+                }
+
+            }
+
         }
 
 

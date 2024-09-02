@@ -1,5 +1,9 @@
 ﻿using APISEYHUN.ConnectionStringClass;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
+using Npgsql;
+using System.Data;
 
 namespace APISEYHUN.Controllers
 {
@@ -12,32 +16,35 @@ namespace APISEYHUN.Controllers
         {
             if (request == null)
             {
-                return BadRequest("Bağlantı isteği boş olamaz.");
+                return BadRequest(new { success = false, message = "Bağlantı isteği boş olamaz." });
             }
 
             if (string.IsNullOrEmpty(request.DatabaseType) ||
                 string.IsNullOrEmpty(request.ServerName) ||
                 string.IsNullOrEmpty(request.DatabaseName))
             {
-                return BadRequest("Veritabanı türü, sunucu adı ve veritabanı adı gereklidir.");
+                return BadRequest(new { success = false, message = "Veritabanı türü, sunucu adı ve veritabanı adı gereklidir." });
             }
 
             try
             {
-                // Dinamik connection string oluşturma
                 string connectionString = BuildConnectionString(request);
 
-                // Connection string'i session'da veya memory'de saklayabilirsiniz
+                if (!TestDatabaseConnection(connectionString, request.DatabaseType))
+                {
+                    return BadRequest(new { success = false, message = "Veritabanı bağlantısı başarısız. Lütfen bilgilerinizi kontrol edin." });
+                }
+
                 HttpContext.Session.SetString("ConnectionString", connectionString);
 
-                return Ok("Bağlantı adresi başarılı bir şekilde ayarlandı.");
+                return Ok(new { success = true, message = "Bağlantı adresi başarılı bir şekilde ayarlandı." });
             }
             catch (Exception ex)
             {
-                // Hata durumunda uygun mesaj döndürme
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error creating connection string: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = $"Error creating connection string: {ex.Message}" });
             }
         }
+
 
         private string BuildConnectionString(ConnectionRequest request)
         {
@@ -58,7 +65,7 @@ namespace APISEYHUN.Controllers
                     if (string.IsNullOrEmpty(request.Username) && string.IsNullOrEmpty(request.Password))
                     {
                         // Windows Authentication
-                        return $"Server={request.ServerName};initial Catalog={request.DatabaseName};integrated Security=true;TrustServerCertificate=True;";
+                        return $"Server={request.ServerName};Initial Catalog={request.DatabaseName};Integrated Security=True;TrustServerCertificate=True;";
                     }
                     else
                     {
@@ -67,7 +74,7 @@ namespace APISEYHUN.Controllers
                         {
                             throw new ArgumentException("SQL Server kimlik doğrulaması için kullanıcı adı ve parola gereklidir.");
                         }
-                        return $"Server={request.ServerName};Database={request.DatabaseName};User Id={request.Username};Password={request.Password};integrated Security=True;TrustServerCertificate=True;";
+                        return $"Server={request.ServerName};Database={request.DatabaseName};User Id={request.Username};Password={request.Password};TrustServerCertificate=True;";
                     }
 
                 case "mysql":
@@ -75,12 +82,12 @@ namespace APISEYHUN.Controllers
                     {
                         throw new ArgumentException("MySQL için kullanıcı adı ve şifre gereklidir.");
                     }
-                    return $"Server={request.ServerName};Database={request.DatabaseName};Uid={request.Username};Password={request.Password};";
+                    return $"Server={request.ServerName};Database={request.DatabaseName};Uid={request.Username};Pwd={request.Password};";
 
                 case "postgresql":
                     if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
                     {
-                        throw new ArgumentException("PostgreSQL için kullanıcı adı ve şifre gereklidir..");
+                        throw new ArgumentException("PostgreSQL için kullanıcı adı ve şifre gereklidir.");
                     }
                     return $"Host={request.ServerName};Database={request.DatabaseName};Username={request.Username};Password={request.Password};";
 
@@ -88,7 +95,25 @@ namespace APISEYHUN.Controllers
                     throw new NotSupportedException($"Veri tabanı tipi '{request.DatabaseType}' desteklenmemektedir.");
             }
         }
+
+        private bool TestDatabaseConnection(string connectionString, string dbType)
+        {
+            try
+            {
+                using IDbConnection connection = dbType.ToLower() switch
+                {
+                    "sqlserver" => new SqlConnection(connectionString),
+                    "mysql" => new MySqlConnection(connectionString),
+                    "postgresql" => new NpgsqlConnection(connectionString),
+                    _ => throw new NotSupportedException("Database type not supported")
+                };
+                connection.Open();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
-
-
 }

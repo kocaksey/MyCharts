@@ -17,27 +17,6 @@
   },
   {
     "ContainingType": "APISEYHUN.Controllers.DataController",
-    "Method": "GetColumnData",
-    "RelativePath": "api/Data/GetColumnData",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "tableName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "columnName",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "APISEYHUN.Controllers.DataController",
     "Method": "GetColumns",
     "RelativePath": "api/Data/GetColumns",
     "HttpMethod": "GET",

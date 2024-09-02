@@ -54,24 +54,50 @@
             <option value="">Sütun Seçin</option>
         </select>
     </div>
+
+    <!-- Farklı tablo ile ilişkilendirme checkbox -->
+    <div>
+        <input type="checkbox" id="enableJoin" onclick="toggleJoinFields()">
+        <label for="enableJoin">Farklı tablo ile ilişkilendireceğim</label>
+    </div>
+
+    <!-- Birleştirilecek tablo ve sütunlar -->
     <div>
         <label for="joinTableSelect">Birleştirilecek Tablo:</label>
-        <input type="text" id="joinTableSelect" placeholder="Birleştirilecek Tablo">
+        <input type="text" id="joinTableSelect" placeholder="Birleştirilecek Tablo" disabled>
     </div>
     <div>
         <label for="joinColumnSelect">Birleştirilecek Sütun:</label>
-        <input type="text" id="joinColumnSelect" placeholder="Birleştirilecek Sütun">
+        <input type="text" id="joinColumnSelect" placeholder="Birleştirilecek Sütun" disabled>
     </div>
     <div>
         <label for="displayColumnSelect">Görüntülenecek Sütun:</label>
-        <input type="text" id="displayColumnSelect" placeholder="Görüntülenecek Sütun">
+        <input type="text" id="displayColumnSelect" placeholder="Görüntülenecek Sütun" disabled>
     </div>
-    <button onclick="fetchColumnValueCountsWithJoin()">Veriyi Getir ve Grafiği Göster</button>
+
+    <button onclick="handleButtonClick()">Veriyi Getir ve Grafiği Göster</button>
 
     <canvas id="myChart" width="400" height="200"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        function handleButtonClick() {
+            const isJoinEnabled = document.getElementById('enableJoin').checked;
+
+            if (isJoinEnabled) {
+                fetchColumnValueCountsWithJoin();
+            } else {
+                fetchColumnValueCounts();
+            }
+        }
+
+        function toggleJoinFields() {
+            const isChecked = document.getElementById('enableJoin').checked;
+            document.getElementById('joinTableSelect').disabled = !isChecked;
+            document.getElementById('joinColumnSelect').disabled = !isChecked;
+            document.getElementById('displayColumnSelect').disabled = !isChecked;
+        }
+
         function connectDatabase() {
             const dbType = document.getElementById('dbType').value;
             const server = document.getElementById('server').value;
@@ -79,31 +105,34 @@
             const userId = document.getElementById('userId').value;
             const password = document.getElementById('password').value;
 
-            // Bağlantı isteğini API'ye gönderin
+            const connectionRequest = {
+                DatabaseType: dbType,
+                ServerName: server,
+                DatabaseName: database,
+                Username: userId,
+                Password: password
+            };
+
             fetch('https://localhost:7249/api/ConnectionString/SetConnection', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    DatabaseType: dbType,
-                    ServerName: server,
-                    DatabaseName: database,
-                    Username: userId,
-                    Password: password
-                })
+                body: JSON.stringify(connectionRequest)
             })
-                .then(response => response.text())
-                .then(message => {
-                    document.getElementById('message').innerText = message;
-                    if (message.includes("başarılı")) {
+                .then(response => response.json())
+                .then(data => {
+                    // API'den gelen JSON yanıtını kontrol et
+                    document.getElementById('message').innerText = data.message;
+                    if (data.success) {
                         fetchTables(); // Bağlantı başarılıysa tabloları getir
                     }
                 })
                 .catch(error => {
-                    document.getElementById('message').innerText = `Bağlantı hatası: ${error}`;
+                    document.getElementById('message').innerText = `Bağlantı hatası: ${error.message}`;
                 });
         }
+
 
         function fetchTables() {
             fetch('https://localhost:7249/api/Data/GetTables')
@@ -163,8 +192,8 @@
             fetch(`https://localhost:7249/api/Data/GetColumnValueCountsWithJoin?tableName=${table}&columnName=${column}&joinTable=${joinTable}&joinColumn=${joinColumn}&displayColumn=${displayColumn}`)
                 .then(response => response.json())
                 .then(data => {
-                    const labels = data.map(item => item[displayColumn]); // Görüntülenecek sütun değerlerini etiket olarak kullan
-                    const counts = data.map(item => item.Count); // Her bir sütun değeri için sayım
+                    const labels = data.map(item => item[displayColumn]);
+                    const counts = data.map(item => item.Count);
 
                     const ctx = document.getElementById('myChart').getContext('2d');
                     new Chart(ctx, {
@@ -172,7 +201,47 @@
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: `Değer Sayısı - ${displayColumn}`,
+                                label: `Quantity - ${displayColumn}`,
+                                data: counts,
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching column value counts with join:', error));
+        }
+
+        function fetchColumnValueCounts() {
+            const table = document.getElementById('tableSelect').value;
+            const column = document.getElementById('columnSelect').value;
+
+            if (!table || !column) {
+                alert("Lütfen tabloyu ve sütunu seçin.");
+                return;
+            }
+
+            fetch(`https://localhost:7249/api/Data/GetColumnValueCounts?tableName=${table}&columnName=${column}`)
+                .then(response => response.json())
+                .then(data => {
+                    const labels = data.map(item => item[column]);
+                    const counts = data.map(item => item.Count);
+
+                    const ctx = document.getElementById('myChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: `Quantity - ${column}`,
                                 data: counts,
                                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                                 borderColor: 'rgba(54, 162, 235, 1)',
