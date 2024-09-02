@@ -75,12 +75,24 @@
         <input type="text" id="displayColumnSelect" placeholder="Görüntülenecek Sütun" disabled>
     </div>
 
+    <!-- Grafik Türü Seçimi -->
+    <div>
+        <label for="chartTypeSelect">Grafik Türü Seçin:</label>
+        <select id="chartTypeSelect">
+            <option value="bar">Bar Chart</option>
+            <option value="line">Line Chart</option>
+            <option value="radar">Radar Chart</option>
+        </select>
+    </div>
+
     <button onclick="handleButtonClick()">Veriyi Getir ve Grafiği Göster</button>
 
     <canvas id="myChart" width="400" height="200"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        let myChart = null;
+
         function handleButtonClick() {
             const isJoinEnabled = document.getElementById('enableJoin').checked;
 
@@ -122,17 +134,15 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    // API'den gelen JSON yanıtını kontrol et
                     document.getElementById('message').innerText = data.message;
                     if (data.success) {
-                        fetchTables(); // Bağlantı başarılıysa tabloları getir
+                        fetchTables();
                     }
                 })
                 .catch(error => {
                     document.getElementById('message').innerText = `Bağlantı hatası: ${error.message}`;
                 });
         }
-
 
         function fetchTables() {
             fetch('https://localhost:7249/api/Data/GetTables')
@@ -144,7 +154,7 @@
                 })
                 .then(tables => {
                     const tableSelect = document.getElementById('tableSelect');
-                    tableSelect.innerHTML = '<option value="">Tablo Seçin</option>'; // Önceki seçenekleri temizle
+                    tableSelect.innerHTML = '<option value="">Tablo Seçin</option>';
                     tables.forEach(table => {
                         const option = document.createElement('option');
                         option.value = table;
@@ -166,7 +176,7 @@
                 .then(response => response.json())
                 .then(columns => {
                     const columnSelect = document.getElementById('columnSelect');
-                    columnSelect.innerHTML = '<option value="">Sütun Seçin</option>'; // Önceki seçenekleri temizle
+                    columnSelect.innerHTML = '<option value="">Sütun Seçin</option>';
                     columns.forEach(column => {
                         const option = document.createElement('option');
                         option.value = column;
@@ -177,12 +187,43 @@
                 .catch(error => console.error('Error fetching columns:', error));
         }
 
+        function drawChart(chartType, labels, counts, displayColumn) {
+            const ctx = document.getElementById('myChart').getContext('2d');
+
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            myChart = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Quantity - ${displayColumn}`,
+                        data: counts,
+                        backgroundColor: chartType === 'radar' ? 'rgba(54, 162, 235, 0.2)' : chartType === 'bar' ? 'rgba(54, 162, 235, 0.2)' : 'rgba(54, 162, 235, 0)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        fill: chartType === 'line' || chartType === 'radar' ? true : false
+                    }]
+                },
+                options: {
+                    scales: chartType === 'radar' ? {} : {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
         function fetchColumnValueCountsWithJoin() {
             const table = document.getElementById('tableSelect').value;
             const column = document.getElementById('columnSelect').value;
             const joinTable = document.getElementById('joinTableSelect').value;
             const joinColumn = document.getElementById('joinColumnSelect').value;
             const displayColumn = document.getElementById('displayColumnSelect').value;
+            const chartType = document.getElementById('chartTypeSelect').value;
 
             if (!table || !column || !joinTable || !joinColumn || !displayColumn) {
                 alert("Lütfen gerekli tüm alanları doldurun.");
@@ -194,28 +235,7 @@
                 .then(data => {
                     const labels = data.map(item => item[displayColumn]);
                     const counts = data.map(item => item.Count);
-
-                    const ctx = document.getElementById('myChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: `Quantity - ${displayColumn}`,
-                                data: counts,
-                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
+                    drawChart(chartType, labels, counts, displayColumn);
                 })
                 .catch(error => console.error('Error fetching column value counts with join:', error));
         }
@@ -223,6 +243,7 @@
         function fetchColumnValueCounts() {
             const table = document.getElementById('tableSelect').value;
             const column = document.getElementById('columnSelect').value;
+            const chartType = document.getElementById('chartTypeSelect').value;
 
             if (!table || !column) {
                 alert("Lütfen tabloyu ve sütunu seçin.");
@@ -234,35 +255,12 @@
                 .then(data => {
                     const labels = data.map(item => item[column]);
                     const counts = data.map(item => item.Count);
-
-                    const ctx = document.getElementById('myChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: `Quantity - ${column}`,
-                                data: counts,
-                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
+                    drawChart(chartType, labels, counts, column);
                 })
                 .catch(error => console.error('Error fetching column value counts:', error));
         }
 
-        // Tablo seçildiğinde sütunları getirmek için event listener ekleyin
         document.getElementById('tableSelect').addEventListener('change', fetchColumns);
-
     </script>
 </body>
 </html>
