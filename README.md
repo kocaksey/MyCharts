@@ -34,6 +34,10 @@ Frontend: HTML, CSS, Bootstrap, JavaScript, jQuery, Chart.js
 Backend: ASP.NET Core, C#
 Databases: SQL Server, MySQL, PostgreSQL
 MyCharts offers a powerful, flexible, and user-friendly tool for anyone with data analysis and visualization needs. It is an excellent solution for both professional use and educational purposes.
+
+
+
+
 MyCharts uygulaması, kullanıcıların çeşitli veri kaynaklarından dinamik olarak grafikler oluşturmasını sağlayan modern ve esnek bir web uygulamasıdır. Uygulama, kullanıcıların farklı veritabanlarına (SQL Server, MySQL, PostgreSQL) bağlanarak tablo ve sütun seçimi yapmasına ve bu verileri çeşitli grafik türlerinde (Bar Chart, Line Chart, Radar Chart) görselleştirmesine olanak tanır.
 
 Özellikler
