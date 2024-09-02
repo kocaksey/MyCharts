@@ -1,0 +1,143 @@
+[
+  {
+    "ContainingType": "APISEYHUN.Controllers.ConnectionStringController",
+    "Method": "SetConnection",
+    "RelativePath": "api/ConnectionString/SetConnection",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "APISEYHUN.ConnectionStringClass.ConnectionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APISEYHUN.Controllers.DataController",
+    "Method": "GetColumnData",
+    "RelativePath": "api/Data/GetColumnData",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tableName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "columnName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APISEYHUN.Controllers.DataController",
+    "Method": "GetColumns",
+    "RelativePath": "api/Data/GetColumns",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tableName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APISEYHUN.Controllers.DataController",
+    "Method": "GetColumnValueCounts",
+    "RelativePath": "api/Data/GetColumnValueCounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tableName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "columnName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APISEYHUN.Controllers.DataController",
+    "Method": "GetColumnValueCountsWithJoin",
+    "RelativePath": "api/Data/GetColumnValueCountsWithJoin",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tableName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "columnName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "joinTable",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "joinColumn",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "displayColumn",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APISEYHUN.Controllers.DataController",
+    "Method": "GetData",
+    "RelativePath": "api/Data/GetData",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tableName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "columns",
+        "Type": "System.String[]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APISEYHUN.Controllers.DataController",
+    "Method": "GetTables",
+    "RelativePath": "api/Data/GetTables",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

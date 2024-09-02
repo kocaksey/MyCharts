@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinamik Chart Uygulaması</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <h1>Dinamik Chart Uygulaması</h1>
+
+    <!-- Veritabanı Bağlantı Bilgileri -->
+    <div>
+        <label for="dbType">Veritabanı Türü:</label>
+        <select id="dbType">
+            <option value="sqlserver">SqlServer</option>
+            <option value="mysql">MySQL</option>
+            <option value="postgresql">PostgreSQL</option>
+        </select>
+    </div>
+    <div>
+        <label for="server">Sunucu:</label>
+        <input type="text" id="server" placeholder="localhost">
+    </div>
+    <div>
+        <label for="database">Veritabanı Adı:</label>
+        <input type="text" id="database" placeholder="Veritabanı Adı">
+    </div>
+    <div>
+        <label for="userId">Kullanıcı Adı:</label>
+        <input type="text" id="userId" placeholder="Kullanıcı Adı">
+    </div>
+    <div>
+        <label for="password">Şifre:</label>
+        <input type="password" id="password" placeholder="Şifre">
+    </div>
+    <button onclick="connectDatabase()">Bağlan ve Tabloları Getir</button>
+
+    <!-- Bağlantı durumu mesajı -->
+    <div id="message"></div>
+
+    <!-- Tablo ve Sütun Seçimi -->
+    <h2>Tablo ve Sütun Seçimi</h2>
+    <div>
+        <label for="tableSelect">Tablo Seçin:</label>
+        <select id="tableSelect">
+            <option value="">Tablo Seçin</option>
+        </select>
+    </div>
+    <div>
+        <label for="columnSelect">Sütun Seçin:</label>
+        <select id="columnSelect">
+            <option value="">Sütun Seçin</option>
+        </select>
+    </div>
+    <div>
+        <label for="joinTableSelect">Birleştirilecek Tablo:</label>
+        <input type="text" id="joinTableSelect" placeholder="Birleştirilecek Tablo">
+    </div>
+    <div>
+        <label for="joinColumnSelect">Birleştirilecek Sütun:</label>
+        <input type="text" id="joinColumnSelect" placeholder="Birleştirilecek Sütun">
+    </div>
+    <div>
+        <label for="displayColumnSelect">Görüntülenecek Sütun:</label>
+        <input type="text" id="displayColumnSelect" placeholder="Görüntülenecek Sütun">
+    </div>
+    <button onclick="fetchColumnValueCountsWithJoin()">Veriyi Getir ve Grafiği Göster</button>
+
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function connectDatabase() {
+            const dbType = document.getElementById('dbType').value;
+            const server = document.getElementById('server').value;
+            const database = document.getElementById('database').value;
+            const userId = document.getElementById('userId').value;
+            const password = document.getElementById('password').value;
+
+            // Bağlantı isteğini API'ye gönderin
+            fetch('https://localhost:7249/api/ConnectionString/SetConnection', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    DatabaseType: dbType,
+                    ServerName: server,
+                    DatabaseName: database,
+                    Username: userId,
+                    Password: password
+                })
+            })
+                .then(response => response.text())
+                .then(message => {
+                    document.getElementById('message').innerText = message;
+                    if (message.includes("başarılı")) {
+                        fetchTables(); // Bağlantı başarılıysa tabloları getir
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('message').innerText = `Bağlantı hatası: ${error}`;
+                });
+        }
+
+        function fetchTables() {
+            fetch('https://localhost:7249/api/Data/GetTables')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(tables => {
+                    const tableSelect = document.getElementById('tableSelect');
+                    tableSelect.innerHTML = '<option value="">Tablo Seçin</option>'; // Önceki seçenekleri temizle
+                    tables.forEach(table => {
+                        const option = document.createElement('option');
+                        option.value = table;
+                        option.textContent = table;
+                        tableSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching tables:', error));
+        }
+
+        function fetchColumns() {
+            const table = document.getElementById('tableSelect').value;
+            if (!table) {
+                alert("Lütfen bir tablo seçin.");
+                return;
+            }
+
+            fetch(`https://localhost:7249/api/Data/GetColumns?tableName=${table}`)
+                .then(response => response.json())
+                .then(columns => {
+                    const columnSelect = document.getElementById('columnSelect');
+                    columnSelect.innerHTML = '<option value="">Sütun Seçin</option>'; // Önceki seçenekleri temizle
+                    columns.forEach(column => {
+                        const option = document.createElement('option');
+                        option.value = column;
+                        option.textContent = column;
+                        columnSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching columns:', error));
+        }
+
+        function fetchColumnValueCountsWithJoin() {
+            const table = document.getElementById('tableSelect').value;
+            const column = document.getElementById('columnSelect').value;
+            const joinTable = document.getElementById('joinTableSelect').value;
+            const joinColumn = document.getElementById('joinColumnSelect').value;
+            const displayColumn = document.getElementById('displayColumnSelect').value;
+
+            if (!table || !column || !joinTable || !joinColumn || !displayColumn) {
+                alert("Lütfen gerekli tüm alanları doldurun.");
+                return;
+            }
+
+            fetch(`https://localhost:7249/api/Data/GetColumnValueCountsWithJoin?tableName=${table}&columnName=${column}&joinTable=${joinTable}&joinColumn=${joinColumn}&displayColumn=${displayColumn}`)
+                .then(response => response.json())
+                .then(data => {
+                    const labels = data.map(item => item[displayColumn]); // Görüntülenecek sütun değerlerini etiket olarak kullan
+                    const counts = data.map(item => item.Count); // Her bir sütun değeri için sayım
+
+                    const ctx = document.getElementById('myChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: `Değer Sayısı - ${displayColumn}`,
+                                data: counts,
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching column value counts:', error));
+        }
+
+        // Tablo seçildiğinde sütunları getirmek için event listener ekleyin
+        document.getElementById('tableSelect').addEventListener('change', fetchColumns);
+
+    </script>
+</body>
+</html>
