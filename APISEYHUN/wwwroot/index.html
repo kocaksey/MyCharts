@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dinamik Chart Uygulaması</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -35,7 +37,7 @@
         <label for="password">Şifre:</label>
         <input type="password" id="password" placeholder="Şifre">
     </div>
-    <button onclick="connectDatabase()">Bağlan ve Tabloları Getir</button>
+    <button id="connectBtn">Bağlan ve Tabloları Getir</button>
 
     <!-- Bağlantı durumu mesajı -->
     <div id="message"></div>
@@ -57,7 +59,7 @@
 
     <!-- Farklı tablo ile ilişkilendirme checkbox -->
     <div>
-        <input type="checkbox" id="enableJoin" onclick="toggleJoinFields()">
+        <input type="checkbox" id="enableJoin">
         <label for="enableJoin">Farklı tablo ile ilişkilendireceğim</label>
     </div>
 
@@ -85,182 +87,176 @@
         </select>
     </div>
 
-    <button onclick="handleButtonClick()">Veriyi Getir ve Grafiği Göster</button>
+    <button id="getChartBtn">Veriyi Getir ve Grafiği Göster</button>
 
     <canvas id="myChart" width="400" height="200"></canvas>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         let myChart = null;
 
-        function handleButtonClick() {
-            const isJoinEnabled = document.getElementById('enableJoin').checked;
+        $(document).ready(function () {
+            $("#enableJoin").on("change", function () {
+                const isChecked = $(this).is(":checked");
+                $("#joinTableSelect, #joinColumnSelect, #displayColumnSelect").prop("disabled", !isChecked);
+            });
 
-            if (isJoinEnabled) {
-                fetchColumnValueCountsWithJoin();
-            } else {
-                fetchColumnValueCounts();
-            }
-        }
+            $("#connectBtn").on("click", function () {
+                const connectionRequest = {
+                    DatabaseType: $("#dbType").val(),
+                    ServerName: $("#server").val(),
+                    DatabaseName: $("#database").val(),
+                    Username: $("#userId").val(),
+                    Password: $("#password").val()
+                };
 
-        function toggleJoinFields() {
-            const isChecked = document.getElementById('enableJoin').checked;
-            document.getElementById('joinTableSelect').disabled = !isChecked;
-            document.getElementById('joinColumnSelect').disabled = !isChecked;
-            document.getElementById('displayColumnSelect').disabled = !isChecked;
-        }
-
-        function connectDatabase() {
-            const dbType = document.getElementById('dbType').value;
-            const server = document.getElementById('server').value;
-            const database = document.getElementById('database').value;
-            const userId = document.getElementById('userId').value;
-            const password = document.getElementById('password').value;
-
-            const connectionRequest = {
-                DatabaseType: dbType,
-                ServerName: server,
-                DatabaseName: database,
-                Username: userId,
-                Password: password
-            };
-
-            fetch('https://localhost:7249/api/ConnectionString/SetConnection', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(connectionRequest)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('message').innerText = data.message;
-                    if (data.success) {
-                        fetchTables();
-                    }
-                })
-                .catch(error => {
-                    document.getElementById('message').innerText = `Bağlantı hatası: ${error.message}`;
-                });
-        }
-
-        function fetchTables() {
-            fetch('https://localhost:7249/api/Data/GetTables')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(tables => {
-                    const tableSelect = document.getElementById('tableSelect');
-                    tableSelect.innerHTML = '<option value="">Tablo Seçin</option>';
-                    tables.forEach(table => {
-                        const option = document.createElement('option');
-                        option.value = table;
-                        option.textContent = table;
-                        tableSelect.appendChild(option);
-                    });
-                })
-                .catch(error => console.error('Error fetching tables:', error));
-        }
-
-        function fetchColumns() {
-            const table = document.getElementById('tableSelect').value;
-            if (!table) {
-                alert("Lütfen bir tablo seçin.");
-                return;
-            }
-
-            fetch(`https://localhost:7249/api/Data/GetColumns?tableName=${table}`)
-                .then(response => response.json())
-                .then(columns => {
-                    const columnSelect = document.getElementById('columnSelect');
-                    columnSelect.innerHTML = '<option value="">Sütun Seçin</option>';
-                    columns.forEach(column => {
-                        const option = document.createElement('option');
-                        option.value = column;
-                        option.textContent = column;
-                        columnSelect.appendChild(option);
-                    });
-                })
-                .catch(error => console.error('Error fetching columns:', error));
-        }
-
-        function drawChart(chartType, labels, counts, displayColumn) {
-            const ctx = document.getElementById('myChart').getContext('2d');
-
-            if (myChart) {
-                myChart.destroy();
-            }
-
-            myChart = new Chart(ctx, {
-                type: chartType,
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: `Quantity - ${displayColumn}`,
-                        data: counts,
-                        backgroundColor: chartType === 'radar' ? 'rgba(54, 162, 235, 0.2)' : chartType === 'bar' ? 'rgba(54, 162, 235, 0.2)' : 'rgba(54, 162, 235, 0)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1,
-                        fill: chartType === 'line' || chartType === 'radar' ? true : false
-                    }]
-                },
-                options: {
-                    scales: chartType === 'radar' ? {} : {
-                        y: {
-                            beginAtZero: true
+                $.ajax({
+                    url: 'https://localhost:7249/api/ConnectionString/SetConnection',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(connectionRequest),
+                    success: function (data) {
+                        $("#message").text(data.message);
+                        if (data.success) {
+                            fetchTables();
                         }
+                    },
+                    error: function (error) {
+                        $("#message").text(`Bağlantı hatası: ${error.responseJSON.message}`);
                     }
+                });
+            });
+        //
+            function fetchTables() {
+                $.ajax({
+                    url: 'https://localhost:7249/api/Data/GetTables',
+                    method: 'GET',
+                    success: function (tables) {
+                        const tableSelect = $("#tableSelect");
+                        tableSelect.empty().append('<option value="">Tablo Seçin</option>');
+                        tables.forEach(function (table) {
+                            tableSelect.append(`<option value="${table}">${table}</option>`);
+                        });
+                    },
+                    error: function (error) {
+                        console.error('Error fetching tables:', error);
+                    }
+                });
+            }
+
+            $("#tableSelect").on("change", function () {
+                const table = $(this).val();
+                if (!table) {
+                    alert("Lütfen bir tablo seçin.");
+                    return;
+                }
+
+                $.ajax({
+                    url: `https://localhost:7249/api/Data/GetColumns?tableName=${table}`,
+                    method: 'GET',
+                    success: function (columns) {
+                        const columnSelect = $("#columnSelect");
+                        columnSelect.empty().append('<option value="">Sütun Seçin</option>');
+                        columns.forEach(function (column) {
+                            columnSelect.append(`<option value="${column}">${column}</option>`);
+                        });
+                    },
+                    error: function (error) {
+                        console.error('Error fetching columns:', error);
+                    }
+                });
+            });
+
+            $("#getChartBtn").on("click", function () {
+                const isJoinEnabled = $("#enableJoin").is(":checked");
+
+                if (isJoinEnabled) {
+                    fetchColumnValueCountsWithJoin();
+                } else {
+                    fetchColumnValueCounts();
                 }
             });
-        }
 
-        function fetchColumnValueCountsWithJoin() {
-            const table = document.getElementById('tableSelect').value;
-            const column = document.getElementById('columnSelect').value;
-            const joinTable = document.getElementById('joinTableSelect').value;
-            const joinColumn = document.getElementById('joinColumnSelect').value;
-            const displayColumn = document.getElementById('displayColumnSelect').value;
-            const chartType = document.getElementById('chartTypeSelect').value;
+            function fetchColumnValueCountsWithJoin() {
+                const table = $("#tableSelect").val();
+                const column = $("#columnSelect").val();
+                const joinTable = $("#joinTableSelect").val();
+                const joinColumn = $("#joinColumnSelect").val();
+                const displayColumn = $("#displayColumnSelect").val();
+                const chartType = $("#chartTypeSelect").val();
 
-            if (!table || !column || !joinTable || !joinColumn || !displayColumn) {
-                alert("Lütfen gerekli tüm alanları doldurun.");
-                return;
+                if (!table || !column || !joinTable || !joinColumn || !displayColumn) {
+                    alert("Lütfen gerekli tüm alanları doldurun.");
+                    return;
+                }
+
+                $.ajax({
+                    url: `https://localhost:7249/api/Data/GetColumnValueCountsWithJoin?tableName=${table}&columnName=${column}&joinTable=${joinTable}&joinColumn=${joinColumn}&displayColumn=${displayColumn}`,
+                    method: 'GET',
+                    success: function (data) {
+                        const labels = data.map(item => item[displayColumn]);
+                        const counts = data.map(item => item.Count);
+                        drawChart(chartType, labels, counts, displayColumn);
+                    },
+                    error: function (error) {
+                        console.error('Error fetching column value counts with join:', error);
+                    }
+                });
             }
 
-            fetch(`https://localhost:7249/api/Data/GetColumnValueCountsWithJoin?tableName=${table}&columnName=${column}&joinTable=${joinTable}&joinColumn=${joinColumn}&displayColumn=${displayColumn}`)
-                .then(response => response.json())
-                .then(data => {
-                    const labels = data.map(item => item[displayColumn]);
-                    const counts = data.map(item => item.Count);
-                    drawChart(chartType, labels, counts, displayColumn);
-                })
-                .catch(error => console.error('Error fetching column value counts with join:', error));
-        }
+            function fetchColumnValueCounts() {
+                const table = $("#tableSelect").val();
+                const column = $("#columnSelect").val();
+                const chartType = $("#chartTypeSelect").val();
 
-        function fetchColumnValueCounts() {
-            const table = document.getElementById('tableSelect').value;
-            const column = document.getElementById('columnSelect').value;
-            const chartType = document.getElementById('chartTypeSelect').value;
+                if (!table || !column) {
+                    alert("Lütfen tabloyu ve sütunu seçin.");
+                    return;
+                }
 
-            if (!table || !column) {
-                alert("Lütfen tabloyu ve sütunu seçin.");
-                return;
+                $.ajax({
+                    url: `https://localhost:7249/api/Data/GetColumnValueCounts?tableName=${table}&columnName=${column}`,
+                    method: 'GET',
+                    success: function (data) {
+                        const labels = data.map(item => item[column]);
+                        const counts = data.map(item => item.Count);
+                        drawChart(chartType, labels, counts, column);
+                    },
+                    error: function (error) {
+                        console.error('Error fetching column value counts:', error);
+                    }
+                });
             }
 
-            fetch(`https://localhost:7249/api/Data/GetColumnValueCounts?tableName=${table}&columnName=${column}`)
-                .then(response => response.json())
-                .then(data => {
-                    const labels = data.map(item => item[column]);
-                    const counts = data.map(item => item.Count);
-                    drawChart(chartType, labels, counts, column);
-                })
-                .catch(error => console.error('Error fetching column value counts:', error));
-        }//
+            function drawChart(chartType, labels, counts, displayColumn) {
+                const ctx = document.getElementById('myChart').getContext('2d');
 
-        document.getElementById('tableSelect').addEventListener('change', fetchColumns);
+                if (myChart) {
+                    myChart.destroy();
+                }
+
+                myChart = new Chart(ctx, {
+                    type: chartType,
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: `Quantity - ${displayColumn}`,
+                            data: counts,
+                            backgroundColor: chartType === 'radar' ? 'rgba(54, 162, 235, 0.2)' : chartType === 'bar' ? 'rgba(54, 162, 235, 0.2)' : 'rgba(54, 162, 235, 0)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            fill: chartType === 'line' || chartType === 'radar' ? true : false
+                        }]
+                    },
+                    options: {
+                        scales: chartType === 'radar' ? {} : {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>
