@@ -90,27 +90,6 @@
   },
   {
     "ContainingType": "APISEYHUN.Controllers.DataController",
-    "Method": "GetData",
-    "RelativePath": "api/Data/GetData",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "tableName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "columns",
-        "Type": "System.String[]",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "APISEYHUN.Controllers.DataController",
     "Method": "GetTables",
     "RelativePath": "api/Data/GetTables",
     "HttpMethod": "GET",

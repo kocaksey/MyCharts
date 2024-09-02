@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\index.html"
     },
     {
+      "Id": "C:\\Users\\ASUS\\Source\\Repos\\MyCharts\\APISEYHUN\\wwwroot\\js\\methods.js",
+      "PackagePath": "staticwebassets\\js\\methods.js"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.APISEYHUN.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
